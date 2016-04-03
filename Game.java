@@ -111,14 +111,14 @@ public class Game {
 		return userInput;
 	}
 	
-	boolean equalFinishedPosition(String w, int x, int y, int counter){
+	boolean equalFinishedPosition(String path, int x, int y, int counter){
 		if((x==x2) && (y==y2)){
 			
 			if (counter<noumera) {
 			   noumera=counter;
 			   meta=(String) letter.get(x);
-			   w+=" " +meta+ "" +y;
-			   way=w;
+			   path+=" " +meta+ "" +y;
+			   way=path;
 			}
 			return true;
 		}
@@ -126,28 +126,28 @@ public class Game {
 	}
 	
 
-	boolean PossibleMoves(String w, int counter, int x, int y){
+	boolean PossibleMoves(String path, int counter, int x, int y){
 		
 		if(!isValidPosition(x,y))return false;
 		if (board[x][y] == 1) return false; //exei idi patisei 
 		board[x][y] = 1; //pataei 
 		counter++;
-		if(equalFinishedPosition(w,x,y, counter)) return true;
+		if(equalFinishedPosition(path,x,y, counter)) return true;
 		
 		meta=(String) letter.get(x);
 		   
-		w+=" " +meta+ "" +y+" =>";
+		path+=" " +meta+ "" +y+" =>";
 		  
 		
-		PossibleMoves(w, counter, x+2, y+1);
-		PossibleMoves(w, counter, x+2, y-1);
-		PossibleMoves(w, counter, x-2, y+1);
-		PossibleMoves(w, counter, x-2, y-1);
+		PossibleMoves(path, counter, x+2, y+1);
+		PossibleMoves(path, counter, x+2, y-1);
+		PossibleMoves(path, counter, x-2, y+1);
+		PossibleMoves(path, counter, x-2, y-1);
 		
-		PossibleMoves(w, counter, x+1, y+2);
-		PossibleMoves(w, counter, x-1, y+2);
-		PossibleMoves(w, counter, x+1, y-2);
-		PossibleMoves(w, counter, x-1, y-2);
+		PossibleMoves(path, counter, x+1, y+2);
+		PossibleMoves(path, counter, x-1, y+2);
+		PossibleMoves(path, counter, x+1, y-2);
+		PossibleMoves(path, counter, x-1, y-2);
 		return false;
 	}
     		
