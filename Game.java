@@ -9,19 +9,31 @@ public class Game {
 	HashMap letter = new HashMap<String,Integer>();
 	private int x1,x2,y1,y2;
 	int noumera;
-
+	String way;
+	String meta;
+	
 	public void Game() throws IOException{
 		board = new int[8][8];
-		letter.put("a",1);
-		letter.put("b",2);
-		letter.put("c",3);
-		letter.put("d",4);
-		letter.put("e",5);
-		letter.put("f",6);
-		letter.put("g",7);
-		letter.put("h",8);
-		noumera =0;
+		letter.put("A",0);
+		letter.put("B",1);
+		letter.put("C",2);
+		letter.put("D",3);
+		letter.put("E",4);
+		letter.put("F",5);
+		letter.put("G",6);
+		letter.put("H",7);
 		
+		letter.put(0,"A");
+		letter.put(1,"B");
+		letter.put(2,"C");
+		letter.put(3,"D");
+		letter.put(4,"E");
+		letter.put(5,"F");
+		letter.put(6,"G");
+		letter.put(7,"H");
+		noumera =1000;
+		way="";
+		meta="";
 		initBoard();
 		getInitialHorsePosition();
 		
@@ -47,10 +59,11 @@ public class Game {
 		this.y1=Integer.parseInt(parts[1]);
 		//place horse on requested position
 		this.x1 = (Integer) letter.get(row);
-		board[x1][y1] = 1;
+		board[x1][y1] = 5;
 		getFinallyHorsePosition();
-		PossibleMoves(0, x1, y1);
-		System.out.println("Minimum vimata: " + noumera);
+		PossibleMoves("",0, x1, y1);
+		System.out.println("Steps: " + noumera);
+		System.out.println("Way: " + way);
 	}
 
 	private void getFinallyHorsePosition() throws IOException {
@@ -64,13 +77,12 @@ public class Game {
 		
 		//place horse on requested position
 		this.x2 = (Integer) letter.get(row);
-		board[x2][y2] = 2;
 		
-		equalFinishedPosition(x1, y1, 0);
+		equalFinishedPosition("is already there",x1, y1, 0);
 	}
 	private boolean isValidPosition (int row, int column){
-		if (row <1 || row > 8 ) return false;
-		if (column <1 || column > 8 ) return false;
+		if (row <0 || row > 7 ) return false;
+		if (column <0 || column > 7 ) return false;
 		return true;
 	}
 
@@ -80,9 +92,8 @@ public class Game {
 		int column=0;
 		String userInput="";
 		do{
-			System.out.println("getting user input");
 	        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Please enter the final position in xy notation where x = a to h and y = 1 to 8");
+			System.out.println("Please enter the final position in xy notation where x = A to H and y = 1 to 8");
 			try {
 				userInput  = br.readLine();
 			} catch (IOException e) {
@@ -100,23 +111,43 @@ public class Game {
 		return userInput;
 	}
 	
-	boolean equalFinishedPosition(int x, int y, int counter){
+	boolean equalFinishedPosition(String w, int x, int y, int counter){
 		if((x==x2) && (y==y2)){
-			System.out.println("Pige ston teliko proorismo! ");
-			if (counter>noumera) noumera=counter;
+			
+			if (counter<noumera) {
+			   noumera=counter;
+			   meta=(String) letter.get(x);
+			   w+=" " +meta+ "" +y;
+			   way=w;
+			}
 			return true;
 		}
 		return false;
 	}
 	
-	boolean PossibleMoves(int counter, int x, int y){
-		if(!isValidPosition(x,y))return false;
-		if(equalFinishedPosition(x,y, counter++)) return true;
+
+	boolean PossibleMoves(String w, int counter, int x, int y){
 		
-		PossibleMoves(counter++, x+2, y+1);
-		PossibleMoves(counter++, x+2, y-1);
-		//PossibleMoves(counter++, x-2, y+1);
-		//PossibleMoves(counter++, x-2, y-1);
+		if(!isValidPosition(x,y))return false;
+		if (board[x][y] == 1) return false; //exei idi patisei 
+		board[x][y] = 1; //pataei 
+		counter++;
+		if(equalFinishedPosition(w,x,y, counter)) return true;
+		
+		meta=(String) letter.get(x);
+		   
+		w+=" " +meta+ "" +y+" =>";
+		  
+		
+		PossibleMoves(w, counter, x+2, y+1);
+		PossibleMoves(w, counter, x+2, y-1);
+		PossibleMoves(w, counter, x-2, y+1);
+		PossibleMoves(w, counter, x-2, y-1);
+		
+		PossibleMoves(w, counter, x+1, y+2);
+		PossibleMoves(w, counter, x-1, y+2);
+		PossibleMoves(w, counter, x+1, y-2);
+		PossibleMoves(w, counter, x-1, y-2);
 		return false;
 	}
     		
