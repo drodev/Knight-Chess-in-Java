@@ -36,8 +36,6 @@ public class Game {
 		meta="";
 		initBoard();
 		getInitialHorsePosition();
-		
-		
 	};
 
 	// init the board first
@@ -67,7 +65,6 @@ public class Game {
 	}
 
 	private void getFinallyHorsePosition() throws IOException {
-		
 		
 		String userInput = helpfunction();
 		//divide into 2 variables
@@ -112,8 +109,7 @@ public class Game {
 	}
 	
 	boolean equalFinishedPosition(String path, int x, int y, int counter){
-		if((x==x2) && (y==y2)){
-			
+		if((x==x2) && (y==y2)){	
 			if (counter<noumera) {
 			   noumera=counter;
 			   meta=(String) letter.get(x);
@@ -135,10 +131,8 @@ public class Game {
 		if(equalFinishedPosition(path,x,y, counter)) return true;
 		
 		meta=(String) letter.get(x);
-		   
 		path+=" " +meta+ "" +y+" =>";
 		  
-		
 		PossibleMoves(path, counter, x+2, y+1);
 		PossibleMoves(path, counter, x+2, y-1);
 		PossibleMoves(path, counter, x-2, y+1);
@@ -149,6 +143,5 @@ public class Game {
 		PossibleMoves(path, counter, x+1, y-2);
 		PossibleMoves(path, counter, x-1, y-2);
 		return false;
-	}
-    		
+	}  		
 }
