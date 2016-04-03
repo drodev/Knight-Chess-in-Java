@@ -34,19 +34,9 @@ public class Game {
 		noumera =1000;
 		way="";
 		meta="";
-		initBoard();
 		getInitialHorsePosition();
 	};
 
-	// init the board first
-	private void initBoard() {
-		System.out.println("init board()");
-		for(int x=0; x<8; x++){
-			for(int y=0; y<8; y++){
-				board[x][y] = 0;
-			}
-		}		
-	}
 	
 	private void getInitialHorsePosition() throws IOException {
 		
